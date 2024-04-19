@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameStartMenu : MonoBehaviour
 {
-    [Header("UI Pages")]
+    [Header("Main Menu UI")]
     public GameObject mainMenu;
     public GameObject weaponsMenu;
     public GameObject sceneryMenu;
     public GameObject rangeMenu;
     public GameObject aboutMenu;
-    public GameObject descriptionPanel;
+
+    /**[Header("Weapon Selection UI")]
+    public GameObject weaponSelectionMenu;
+    public Dropdown leftHandDropdown;
+    public Dropdown rightHandDropdown;
+    public Button weaponBackButton;**/
 
     [Header("Main Menu Buttons")]
     public Button startButton;
@@ -22,12 +25,9 @@ public class GameStartMenu : MonoBehaviour
     public Button aboutButton;
     public Button quitButton;
 
-    public List<Button> returnButtons;
-
     void Start()
     {
-        EnableMainMenu();
-
+        // Main Menu Button Listeners
         startButton.onClick.AddListener(StartGame);
         weaponsButton.onClick.AddListener(EnableWeaponsMenu);
         sceneryButton.onClick.AddListener(EnableSceneryMenu);
@@ -35,16 +35,19 @@ public class GameStartMenu : MonoBehaviour
         aboutButton.onClick.AddListener(EnableAboutMenu);
         quitButton.onClick.AddListener(QuitGame);
 
-      
+        // Weapon Selection Button Listeners
+        //weaponBackButton.onClick.AddListener(HideWeaponSelectionMenu);
+
+        EnableMainMenu();
     }
 
-    public void StartGame()
-    {
-        HideAll();
-        SceneManager.LoadScene("newRoom");
-        Debug.Log("Starting the game...");
-    }
-    public void QuitGame()
+    public void StartGame() { 
+            Debug.Log("Attempting to start the game...");
+            HideAll();
+            SceneManager.LoadScene("newRoom");
+        }
+
+        public void QuitGame()
     {
         Application.Quit();
         Debug.Log("Quitting the game...");
@@ -57,7 +60,7 @@ public class GameStartMenu : MonoBehaviour
         sceneryMenu.SetActive(false);
         rangeMenu.SetActive(false);
         aboutMenu.SetActive(false);
-        descriptionPanel.SetActive(false);
+        //weaponSelectionMenu.SetActive(false);
     }
 
     public void EnableMainMenu()
@@ -65,14 +68,10 @@ public class GameStartMenu : MonoBehaviour
         HideAll();
         mainMenu.SetActive(true);
     }
-   /** public void OpenWeaponSelectionScene()
-    { 
-    }**/
-
 
     public void EnableWeaponsMenu()
     {
-        HideAll();
+HideAll();
         weaponsMenu.SetActive(true);
     }
 
@@ -88,11 +87,21 @@ public class GameStartMenu : MonoBehaviour
         rangeMenu.SetActive(true);
     }
 
-    public Text descriptionText; // Reference to the Text component of the description panel
-
     public void EnableAboutMenu()
     {
         HideAll();
         aboutMenu.SetActive(true);
+    }
+
+    void ShowWeaponSelectionMenu()
+    {
+        HideAll();
+        //weaponSelectionMenu.SetActive(true);
+    }
+
+    void HideWeaponSelectionMenu()
+    {
+        //weaponSelectionMenu.SetActive(false);
+        EnableMainMenu(); // Return to main menu after hiding weapon selection menu
     }
 }
